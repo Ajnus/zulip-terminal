@@ -514,7 +514,7 @@ def group_pm_template() -> Message:
 
 
 @pytest.fixture(params=["pm_template", "group_pm_template"])
-def private_message_fixture(request: Any) -> Message:
+def direct_message_fixture(request: Any) -> Message:
     return request.getfixturevalue(request.param)
 
 
@@ -1068,8 +1068,8 @@ def empty_index(
             all_msg_ids=set(),
             starred_msg_ids=set(),
             mentioned_msg_ids=set(),
-            private_msg_ids=set(),
-            private_msg_ids_by_user_ids=defaultdict(set, {}),
+            direct_msg_ids=set(),
+            direct_msg_ids_by_user_ids=defaultdict(set, {}),
             stream_msg_ids_by_stream_id=defaultdict(set, {}),
             topic_msg_ids=defaultdict(dict, {}),
             edited_messages=set(),
