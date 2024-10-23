@@ -730,7 +730,7 @@ class RightColumnView(urwid.Frame):
             # Only include `inactive` users in search result.
             if status == "inactive" and not self.view.controller.is_in_editor_mode():
                 continue
-            unread_count = self.view.model.unread_counts["unread_pms"].get(
+            unread_count = self.view.model.unread_counts["unread_dms"].get(
                 user["user_id"], 0
             )
             is_current_user = user["user_id"] == self.view.model.user_id
@@ -792,7 +792,7 @@ class LeftColumnView(urwid.Pile):
         count = self.model.unread_counts.get("all_msg", 0)
         self.view.home_button = HomeButton(controller=self.controller, count=count)
 
-        count = self.model.unread_counts.get("all_pms", 0)
+        count = self.model.unread_counts.get("all_dms", 0)
         self.view.pm_button = PMButton(controller=self.controller, count=count)
 
         self.view.mentioned_button = MentionedButton(
