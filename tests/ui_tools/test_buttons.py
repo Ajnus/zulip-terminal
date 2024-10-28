@@ -13,7 +13,7 @@ from zulipterminal.ui_tools.buttons import (
     EmojiButton,
     MessageLinkButton,
     ParsedNarrowLink,
-    PMButton,
+    DMButton,
     StarredButton,
     StreamButton,
     TopButton,
@@ -179,13 +179,13 @@ class TestTopButton:
         set_attr_map.assert_called_once_with({None: top_button.label_style})
 
 
-class TestPMButton:
+class TestDMButton:
     def test_button_text_length(self, mocker: MockerFixture, count: int = 10) -> None:
-        dm_button = PMButton(controller=mocker.Mock(), count=count)
+        dm_button = DMButton(controller=mocker.Mock(), count=count)
         assert len(dm_button.label_text) == 20
 
     def test_button_text_title(self, mocker: MockerFixture, count: int = 10) -> None:
-        dm_button = PMButton(controller=mocker.Mock(), count=count)
+        dm_button = DMButton(controller=mocker.Mock(), count=count)
         title_text = dm_button.label_text[:-3].strip()
         assert title_text == "Direct messages"
 
