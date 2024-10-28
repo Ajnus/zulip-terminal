@@ -50,7 +50,7 @@ from zulipterminal.ui_tools.buttons import (
     HomeButton,
     MentionedButton,
     MessageLinkButton,
-    PMButton,
+    DMButton,
     StarredButton,
     StreamButton,
     TopicButton,
@@ -629,18 +629,18 @@ class MiddleColumnView(urwid.Frame):
                 topic_name=topic,
             )
             return key
-        elif is_command_key("NEXT_UNREAD_PM", key):
-            # narrow to next unread pm
-            pm = self.model.get_next_unread_pm()
-            if pm is None:
+        elif is_command_key("NEXT_UNREAD_DM", key):
+            # narrow to next unread dm
+            dm = self.model.get_next_unread_pm()
+            if dm is None:
                 return key
-            email = self.model.user_id_email_dict[pm]
+            email = self.model.user_id_email_dict[dm]
             self.controller.narrow_to_user(
                 recipient_emails=[email],
-                contextual_message_id=pm,
+                contextual_message_id=dm,
             )
-        elif is_command_key("PRIVATE_MESSAGE", key):
-            # Create new PM message
+        elif is_command_key("DIRECT_MESSAGE", key):
+            # Create new DM message
             self.footer.private_box_view()
             self.set_focus("footer")
             self.footer.focus_position = 0
@@ -730,7 +730,7 @@ class RightColumnView(urwid.Frame):
             # Only include `inactive` users in search result.
             if status == "inactive" and not self.view.controller.is_in_editor_mode():
                 continue
-            unread_count = self.view.model.unread_counts["unread_pms"].get(
+            unread_count = self.view.model.unread_counts["unread_dms"].get(
                 user["user_id"], 0
             )
             is_current_user = user["user_id"] == self.view.model.user_id
@@ -792,8 +792,8 @@ class LeftColumnView(urwid.Pile):
         count = self.model.unread_counts.get("all_msg", 0)
         self.view.home_button = HomeButton(controller=self.controller, count=count)
 
-        count = self.model.unread_counts.get("all_pms", 0)
-        self.view.pm_button = PMButton(controller=self.controller, count=count)
+        count = self.model.unread_counts.get("all_dms", 0)
+        self.view.dm_button = DMButton(controller=self.controller, count=count)
 
         self.view.mentioned_button = MentionedButton(
             controller=self.controller,
@@ -807,7 +807,7 @@ class LeftColumnView(urwid.Pile):
         )
         menu_btn_list = [
             self.view.home_button,
-            self.view.pm_button,
+            self.view.dm_button,
             self.view.mentioned_button,
             self.view.starred_button,
         ]
